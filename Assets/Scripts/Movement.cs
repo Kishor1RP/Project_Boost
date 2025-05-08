@@ -3,12 +3,17 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody rb;
     [SerializeField]float mainTrust = 1000f;
     [SerializeField]float rotaionThrust = 200f;
+    [SerializeField]AudioClip mainThrustSFX;
+
+    
+    Rigidbody rb;
+    AudioSource audiosource;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audiosource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -21,7 +26,15 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            if (!audiosource.isPlaying)
+            {
+                audiosource.PlayOneShot(mainThrustSFX);
+            }
             rb.AddRelativeForce(Vector3.up * mainTrust * Time.deltaTime);
+        }
+        else
+        {
+            audiosource.Stop();
         }
         
     }

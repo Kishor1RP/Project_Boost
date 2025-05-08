@@ -605,25 +605,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3414329269571504109, guid: 0be282171c968234a81660e9e3723438, type: 3}
-      propertyPath: m_Constraints
-      value: 56
-      objectReference: {fileID: 0}
-    - target: {fileID: 3414329269571504109, guid: 0be282171c968234a81660e9e3723438, type: 3}
-      propertyPath: m_LinearDamping
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 4347813275828067867, guid: 0be282171c968234a81660e9e3723438, type: 3}
       propertyPath: m_Name
       value: Rocket
-      objectReference: {fileID: 0}
-    - target: {fileID: 5003915883008055564, guid: 0be282171c968234a81660e9e3723438, type: 3}
-      propertyPath: mainTrust
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5003915883008055564, guid: 0be282171c968234a81660e9e3723438, type: 3}
-      propertyPath: rotaionThrust
-      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 6236368474739024018, guid: 0be282171c968234a81660e9e3723438, type: 3}
       propertyPath: m_LocalPosition.x
