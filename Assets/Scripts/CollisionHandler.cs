@@ -10,6 +10,8 @@ public class CollisionHandler : MonoBehaviour
     
     AudioSource audioSource;
     int currentSceneIndex;
+    
+    bool isTransioning = false;
 
     void Start()
     {
@@ -17,7 +19,8 @@ public class CollisionHandler : MonoBehaviour
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
     void OnCollisionEnter(Collision other) 
-    {
+    {   
+        if (isTransioning){return;}
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -26,7 +29,7 @@ public class CollisionHandler : MonoBehaviour
                 // Get Fuel System ready
                 break;
             case "Landing":
-                StartWinSwquence();
+               StartWinSwquence();
                 break;
             default:
                 StartCrashSequence();
@@ -36,12 +39,16 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
+        isTransioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(explosionSFX);
         GetComponent<Movement>().enabled = false;
         Invoke ("ReloadLevel", loadingDelay);
     }
     void StartWinSwquence()
     {
+        isTransioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(WinningSFX);
         GetComponent<Movement>().enabled = false;
         Invoke ("LoadNextLevel", loadingDelay);
