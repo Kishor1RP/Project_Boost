@@ -6,6 +6,9 @@ public class Movement : MonoBehaviour
     [SerializeField]float mainTrust = 1000f;
     [SerializeField]float rotaionThrust = 200f;
     [SerializeField]AudioClip mainThrustSFX;
+    [SerializeField]ParticleSystem mainThrustParticle;
+    [SerializeField]ParticleSystem leftThrustParticle;
+    [SerializeField]ParticleSystem rightThrustParticle;
 
     
     Rigidbody rb;
@@ -26,30 +29,71 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (!audiosource.isPlaying)
-            {
-                audiosource.PlayOneShot(mainThrustSFX);
-            }
-            rb.AddRelativeForce(Vector3.up * mainTrust * Time.deltaTime);
+            StartThrusting();
         }
         else
         {
-            audiosource.Stop();
+            StopThrusting();
         }
-        
+
     }
     void ProcessRotation()
     {
         if(Input.GetKey(KeyCode.A))
         {
-            ApplyRotation(rotaionThrust);
+            StartThrustingLeft();
         }
         else if(Input.GetKey(KeyCode.D))
         {
-            ApplyRotation(-rotaionThrust);
+            StartThrustingRight();
+        }
+        else
+        {
+            StopSideThrusting();
         }
     }
-
+    void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * mainTrust * Time.deltaTime);
+        PlayThrustSound();
+        if (!mainThrustParticle.isPlaying)
+        {
+            mainThrustParticle.Play();
+        }
+    }
+    void StopThrusting()
+    {
+        audiosource.Stop();
+        mainThrustParticle.Stop();
+    }
+    void StartThrustingRight()
+    {
+        ApplyRotation(-rotaionThrust);
+        if (!leftThrustParticle.isPlaying)
+        {
+            leftThrustParticle.Play();
+        }
+    }
+    void StartThrustingLeft()
+    {
+        ApplyRotation(rotaionThrust);
+        if (!rightThrustParticle.isPlaying)
+        {
+            rightThrustParticle.Play();
+        }
+    }
+    void StopSideThrusting()
+    {
+        rightThrustParticle.Stop();
+        leftThrustParticle.Stop();
+    }
+    void PlayThrustSound()
+    {
+        if (!audiosource.isPlaying)
+        {
+            audiosource.PlayOneShot(mainThrustSFX);
+        }
+    }
     void ApplyRotation(float rotationThisFrame)
     {
         rb.freezeRotation = true;
